@@ -1,0 +1,10 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.gaspra.wordwheellive",
+      "sha256_cert_fingerprints": ["75:7E:2D:01:62:B5:A7:49:86:3F:8C:23:A7:51:AF:8A:05:63:88:2C:12:38:D8:9F:7C:43:F4:C3:9E:DC:8E:CA"]
+    }
+  }
+]
