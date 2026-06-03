@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Wheel Live - Duel Invitation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-color: #ffd700;
+            --text-color: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.6);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            background-image: radial-gradient(circle at 50% 30%, rgba(255, 215, 0, 0.05) 0%, transparent 60%);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 420px;
+            text-align: center;
+            padding: 40px 24px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--accent-color);
+            margin-bottom: 24px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 800;
+            margin: 0 0 8px 0;
+        }
+
+        p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin: 0 0 24px 0;
+            line-height: 1.5;
+        }
+
+        .code-container {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1.5px solid rgba(255, 215, 0, 0.3);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .code-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .code-val {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 6px;
+            color: var(--accent-color);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 52px;
+            background: var(--accent-color);
+            color: #0b0f19;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0 8px 16px rgba(255, 215, 0, 0.2);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            box-sizing: border-box;
+            margin-bottom: 12px;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 4px rgba(255, 215, 0, 0.1);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--card-border);
+            box-shadow: none;
+        }
+
+        .btn-secondary:active {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .status {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 16px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">WORD WHEEL LIVE</div>
+        <h1 id="title">Duel Invitation</h1>
+        <p id="desc">You have been invited to a private match!</p>
+        
+        <div class="code-container">
+            <div class="code-label" id="label-code">Room Code</div>
+            <div class="code-val" id="room-code">------</div>
+        </div>
+
+        <button class="btn" onclick="openApp()" id="btn-join">Join Match</button>
+        <a class="btn btn-secondary" href="https://play.google.com/store/apps/details?id=com.gaspra.wordwheellive" id="btn-store">Get Game on Play Store</a>
+        
+        <div class="status" id="status-text">Attempting to open the game automatically...</div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = (urlParams.get('code') || '').trim().toUpperCase();
+        
+        if (code) {
+            document.getElementById('room-code').innerText = code;
+        }
+
+        const translations = {
+            'tr': {
+                title: 'Düello Daveti',
+                desc: 'Bir arkadaşın seni özel düelloya çağırıyor!',
+                label: 'Oda Kodu',
+                btnJoin: 'Düelloya Katıl',
+                btnStore: 'Oyunu Play Store\'dan İndir',
+                status: 'Oyun yüklüyse otomatik açılması bekleniyor...'
+            },
+            'en': {
+                title: 'Duel Invitation',
+                desc: 'A friend has invited you to a private duel!',
+                label: 'Room Code',
+                btnJoin: 'Join Duel',
+                btnStore: 'Get Game on Play Store',
+                status: 'If the game is installed, it should open automatically...'
+            },
+            'de': {
+                title: 'Duell-Einladung',
+                desc: 'Ein Freund hat dich zu einem privaten Duell eingeladen!',
+                label: 'Raumcode',
+                btnJoin: 'Duell beitreten',
+                btnStore: 'Spiel im Play Store herunterladen',
+                status: 'Wenn das Spiel installiert ist, sollte es sich automatisch öffnen...'
+            },
+            'es': {
+                title: 'Invitación al Duelo',
+                desc: '¡Un amigo te ha invitado a un duelo privado!',
+                label: 'Código de Sala',
+                btnJoin: 'Unirse al Duelo',
+                btnStore: 'Descargar en Play Store',
+                status: 'Si el juego está instalado, debería abrirse automáticamente...'
+            },
+            'fr': {
+                title: 'Invitation au Duel',
+                desc: 'Un ami t\'a invité à un duel privé !',
+                label: 'Code de la salle',
+                btnJoin: 'Rejoindre le duel',
+                btnStore: 'Télécharger sur le Play Store',
+                status: 'Si le jeu est installé, il devrait s\'ouvrir automatiquement...'
+            }
+        };
+
+        const lang = (navigator.language || navigator.userLanguage || 'en').split('-')[0].toLowerCase();
+        const activeLang = translations[lang] || translations['en'];
+
+        document.getElementById('title').innerText = activeLang.title;
+        document.getElementById('desc').innerText = activeLang.desc;
+        document.getElementById('label-code').innerText = activeLang.label;
+        document.getElementById('btn-join').innerText = activeLang.btnJoin;
+        document.getElementById('btn-store').innerText = activeLang.btnStore;
+        document.getElementById('status-text').innerText = activeLang.status;
+
+        const playStoreUrl = "https://play.google.com/store/apps/details?id=com.gaspra.wordwheellive";
+        const appLink = "wordwheellive://join/" + code;
+
+        function openApp() {
+            window.location.href = appLink;
+            setTimeout(function() {
+                window.location.href = playStoreUrl;
+            }, 2500);
+        }
+
+        const isAndroid = /Android/i.test(navigator.userAgent);
+        if (isAndroid && code) {
+            setTimeout(openApp, 1200);
+        }
+    </script>
+</body>
+</html>
